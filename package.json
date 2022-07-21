@@ -1,5 +1,8 @@
 {
   "type": "module",
+  "scripts": {
+    "dev": "node main.js"
+  },
   "dependencies": {
     "ethers": "^5.6.9",
     "lit-js-sdk": "^1.1.202",
