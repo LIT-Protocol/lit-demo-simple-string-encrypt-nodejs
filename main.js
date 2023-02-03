@@ -1,16 +1,16 @@
-import LitJsSdk from 'lit-js-sdk/build/index.node.js';
+import LitJsSdk from '@lit-protocol/lit-node-client';
 import * as u8a from "uint8arrays";
 import ethers from "ethers";
 import siwe from "siwe";
 
-const go = async () => {
+const encryptDecryptString = async () => {
 
     // -- init litNodeClient
     const litNodeClient = new LitJsSdk.LitNodeClient();
 
     await litNodeClient.connect();
 
-    const messageToEncrypt = "🔥🔥🔥🔥🔥 THIS IS A SECRET MESSAGE 🔥🔥🔥🔥🔥 ";
+    const messageToEncrypt = "Lit is 🔥";
 
     const chain = 'ethereum';
 
@@ -77,6 +77,7 @@ const go = async () => {
  */
 const signAuthMessage = async () => {
 
+    // Replace this with you private key
     const privKey =
     "3dfb4f70b15b6fccc786347aaea445f439a7f10fd10c55dd50cafc3d5a0abac1";
     const privKeyBuffer = u8a.fromString(privKey, "base16");
@@ -88,12 +89,12 @@ const signAuthMessage = async () => {
     "This is a test statement.  You can put anything you want here.";
 
     const siweMessage = new siwe.SiweMessage({
-    domain,
-    address: wallet.address,
-    statement,
-    uri: origin,
-    version: "1",
-    chainId: "1",
+        domain,
+        address: wallet.address,
+        statement,
+        uri: origin,
+        version: "1",
+        chainId: "1",
     });
 
     const messageToSign = siweMessage.prepareMessage();
@@ -105,13 +106,13 @@ const signAuthMessage = async () => {
     const recoveredAddress = ethers.utils.verifyMessage(messageToSign, signature);
 
     const authSig = {
-    sig: signature,
-    derivedVia: "web3.eth.personal.sign",
-    signedMessage: messageToSign,
-    address: recoveredAddress,
+        sig: signature,
+        derivedVia: "web3.eth.personal.sign",
+        signedMessage: messageToSign,
+        address: recoveredAddress,
     };
 
     return authSig;
 }
 
-go();
+encryptDecryptString();
