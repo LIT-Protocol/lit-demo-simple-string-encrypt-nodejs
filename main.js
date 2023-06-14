@@ -1,3 +1,10 @@
+/**
+ * NOTE: You can use either `lit-node-client` or `lit-node-client-nodejs` they will both work the same.
+ * The only difference is that `lit-node-client` has the ability to use the browser's `window.ethereum` to 
+ * check and sign the auth message. `lit-node-client-nodejs` does not have this ability, so you will need to
+ * sign the auth message yourself.
+ */
+
 // import LitJsSdk from '@lit-protocol/lit-node-client';
 import LitJsSdk from '@lit-protocol/lit-node-client-nodejs';
 import * as u8a from "uint8arrays";
