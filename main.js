@@ -1,4 +1,5 @@
-import LitJsSdk from '@lit-protocol/lit-node-client';
+// import LitJsSdk from '@lit-protocol/lit-node-client';
+import LitJsSdk from '@lit-protocol/lit-node-client-nodejs';
 import * as u8a from "uint8arrays";
 import ethers from "ethers";
 import siwe from "siwe";
@@ -6,7 +7,10 @@ import siwe from "siwe";
 const encryptDecryptString = async () => {
 
     // -- init litNodeClient
-    const litNodeClient = new LitJsSdk.LitNodeClient();
+    // const litNodeClient = new LitJsSdk.LitNodeClient();
+    
+    // -- same thing, but without browser auth
+    const litNodeClient = new LitJsSdk.LitNodeClientNodeJs();
 
     await litNodeClient.connect();
 
