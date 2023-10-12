@@ -42,38 +42,26 @@ const encryptDecryptString = async () => {
     ];
 
     // 1. Encryption
-    // <Blob> encryptedString
-    // <Uint8Array(32)> symmetricKey 
-    const { encryptedString, symmetricKey } = await LitJsSdk.encryptString(messageToEncrypt);
-
-    // 2. Saving the Encrypted Content to the Lit Nodes
-    // <Unit8Array> encryptedSymmetricKey
-    const encryptedSymmetricKey = await litNodeClient.saveEncryptionKey({
-        accessControlConditions,
-        symmetricKey,
+    const { ciphertext, dataToEncryptHash} = await LitJsSdk.encryptString({
         authSig,
-        chain,
-    });
+        accessControlConditions,
+        dataToEncrypt: messageToEncrypt,
+        chain: 'ethereum',
+    }, litNodeClient);
 
     // 3. Decrypt it
-    // <String> toDecrypt
-    const toDecrypt = LitJsSdk.uint8arrayToString(encryptedSymmetricKey, 'base16');
-
-    // <Uint8Array(32)> _symmetricKey 
-    const _symmetricKey = await litNodeClient.getEncryptionKey({
-        accessControlConditions,
-        toDecrypt,
-        chain,
-        authSig
-    })
-
     // <String> decryptedString
     let decryptedString;
 
     try{
         decryptedString = await LitJsSdk.decryptString(
-            encryptedString,
-            _symmetricKey
+            {
+            authSig,
+            accessControlConditions,
+            ciphertext,
+            dataToEncryptHash,
+            chain: 'ethereum',
+            }, litNodeClient
         );
     }catch(e){
         console.log(e);
@@ -90,7 +78,7 @@ const signAuthMessage = async () => {
 
     // Replace this with you private key
     const privKey =
-    "3dfb4f70b15b6fccc786347aaea445f439a7f10fd10c55dd50cafc3d5a0abac1";
+    "";
     const privKeyBuffer = u8a.fromString(privKey, "base16");
     const wallet = new ethers.Wallet(privKeyBuffer);
 
