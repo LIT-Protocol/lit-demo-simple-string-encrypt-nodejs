@@ -54,7 +54,7 @@ const encryptDecryptString = async () => {
     let decryptedString;
 
     try{
-        decryptedString = await LitJsSdk.decryptString(
+        decryptedString = await LitJsSdk.decryptToString(
             {
             authSig,
             accessControlConditions,
@@ -76,9 +76,7 @@ const encryptDecryptString = async () => {
  */
 const signAuthMessage = async () => {
 
-    // Replace this with you private key
-    const privKey =
-    "";
+    const privKey = "< Replace this with you private key >";
     const privKeyBuffer = u8a.fromString(privKey, "base16");
     const wallet = new ethers.Wallet(privKeyBuffer);
 
